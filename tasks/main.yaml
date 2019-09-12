@@ -2,6 +2,7 @@
 - name: Install Radicale package dependencies.
   apt:
     name: "{{ packages }}"
+    update_cache: yes
   vars:
     packages:
       - python3
