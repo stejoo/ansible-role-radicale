@@ -1,29 +1,33 @@
 [Unit]
 Description=Radicale CalDAV and CardDAV server
 Documentation=https://radicale.org/documentation/
-Documentation=https://github.com/AnarchoTechNYC/ansible-role-radicale/blob/master/README.md
+Documentation=https://raw.githubusercontent.com/stejoo/ansible-role-radicale/master/README.md
+After=network.target
+Requires=network.target
 
 [Service]
-User={{ radicale_server_username }}
-Group={{ radicale_server_username }}
-UMask=0027
-RuntimeDirectory=radicale
-ExecStart=/usr/local/bin/radicale
+ExecStart=/usr/bin/env python3 -m radicale
 Restart=on-failure
+User={{ radicale_server_username }}
+# Deny other users access to calendar data
+UMask=0027
+# Radical recommended security precautions
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+NoNewPrivileges=true
+ReadWritePaths={{ radicale_server_home_dir }}/collections
 # Extra security precautions
 LockPersonality=true
 MemoryDenyWriteExecute=true
-NoNewPrivileges=true
-PrivateDevices=true
-PrivateTmp=true
 PrivateUsers=true
-ProtectControlGroups=true
-ProtectHome=true
-ProtectKernelModules=true
-ProtectKernelTunables=true
-ProtectSystem=full
 RestrictAddressFamilies=AF_INET
 RestrictRealtime=true
+RuntimeDirectory=radicale
 
 [Install]
 WantedBy=multi-user.target

@@ -30,6 +30,14 @@
     shell: "/bin/false"
     state: present
 
+- name: Ensure Radicale collections directory.
+  file:
+    path: "{{ radicale_server_home_dir }}/collections"
+    state: directory
+    owner: "{{ radicale_server_username }}"
+    group: "{{ radicale_server_username }}"
+    mode: 0750
+
 - name: Install Radicale.
   pip:
     executable: pip3 # Radicale requires Python 3.3 or greater.
