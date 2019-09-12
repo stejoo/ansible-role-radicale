@@ -104,11 +104,11 @@
     # TODO:
     #validate: "systemd-analyze verify %s"
   notify:
-    - Reload systemd.
     - Restart Radicale.
 
 - name: Start and enable Radicale service.
-  service:
+  systemd:
+    daemon_reload: true
     name: radicale
-    state: "{{ radicale_service_state }}"
     enabled: true
+    state: "{{ radicale_service_state }}"
