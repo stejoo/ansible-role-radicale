@@ -58,8 +58,8 @@
     - Restart Radicale.
 
 - name: Write Radicale user rights configuration.
-  copy:
-    src: rights.conf
+  template:
+    src: rights.conf.j2
     dest: "{{ radicale_server_home_dir }}/rights.conf"
     owner: "{{ radicale_server_username }}"
     group: "{{ radicale_server_username }}"

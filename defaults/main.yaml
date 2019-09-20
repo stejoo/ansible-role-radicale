@@ -53,6 +53,28 @@ radicale_config:
     #full_environment: false
     #config: "/etc/radicale/log.conf"
 
+radicale_rights:
+# Authenticated users can list (discover) their own collections.
+  'owner-discover':
+    user: .+
+    collection: ^%(login)s$
+    permission: rw
+# Authenticated users can read and write their own collections.
+  'owner-write':
+    user: .+
+    collection: ^%(login)s/.*
+    permission: rw
+# Everyone can read the root collection
+  'read':
+    user: .*
+    collection: ''
+    permission: r
+## The user "admin" can read and write any collection.
+#  admin:
+#    user: admin
+#    collection: .*
+#    permission: rw
+
 # List of Radicale user information as a dictionary.
 radicale_users:
   - name: admin     # The username.

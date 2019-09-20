@@ -1,0 +1,19 @@
+################################################
+# Radicale user rights configuration file.     #
+#                                              #
+# See http://radicale.org/rights/ for details. #
+################################################
+
+{# Start looping through key value pairs #}
+{% for key, value in radicale_rights.items() %}
+{# value should be a mapping, it becomes a section #}
+{# not a mapping? it is wrong and will be skipped #}
+{% if value is mapping() %}
+{# a embedded dictionary #}
+{# print the key, walk through subdict and print contents #}
+[{{ key }}]
+{% for k, v in value.items() %}
+{{ k }} = {{ v }}
+{% endfor %}
+{% endif %}
+{% endfor %}
